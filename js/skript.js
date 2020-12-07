@@ -6,27 +6,28 @@
 
 
 
-let personalMuvieDB = {
+let personalMovieDB = {
     count: 0,
-    muvies: {},
+    movies: {},
     actors: {},
     generes: [],
     privat: false,
-    start() {
-      
-        while(this.count == '' || this.count == null || isNaN(this.count)) {
+    SetNumberOfFilms() {
+        this.count = +prompt('Сколько фильмов вы уже посмотрели', '99');
+        while(this.count === 0 || this.count === '' || this.count == null || isNaN(this.count)) {
           this.count = +prompt('Сколько фильмов вы уже посмотрели', '99');
         
         }
+        console.log(`Вами просмотренно ${this.count} фильмов.`)
     },
 
 
-    rememberMyFilms(){
+    rememberMyFilms(numbers = 1){
       let a, b;
       for( let i = 0; 
-          i<2;
+          i<numbers;
           ++i) {
-              a = prompt("какой последний фильм вы смотрели?", ""); 
+              a = prompt("какой фильм вы смотрели?", ""); 
   
               if (+a == 0 || String(a).length >50){
                   --i;
@@ -39,18 +40,21 @@ let personalMuvieDB = {
                   --i;
                   continue;
               }
-              personalMuvieDB.muvies[a] = b;
+              personalMovieDB.movies[a] = b;
           
       
       }
-      
+      console.log('Ваш список просмотренных фильмов:')
+      for (const movie in this.movies) {
+        console.log(`Фильм ${movie}, оценка ${this.movies[movie]}`)
+      }
     },
 
 
     detectPersonalLevel() {
-      if(personalMuvieDB.count < 10){
+      if(personalMovieDB.count < 10){
           alert("Просмотрено довольно мало фильмов");
-      } else if (personalMuvieDB.count < 30){
+      } else if (personalMovieDB.count < 30){
           alert("Вы классический зритель");
       } else {
           alert("Вы киноман");
@@ -59,21 +63,14 @@ let personalMuvieDB = {
     },
 
 
-    showMyDB(hidden){
-      if (!hidden ) {
-          console. log(personalMuvieDB); 
-      }
-
-    },
-
-
+    
 
     writeYourGenres() {
       let ganr;
       for( let i = 1; 
           i < 2;
           ++i) {
-              ganr = prompt(`Ваш любимые жанрычерез запятую`, ""); 
+              ganr = prompt(`Вашы любимые жанры через запятую`, ""); 
   
               if (+ganr == 0 || String(ganr).length >50){
                   --i;
@@ -81,33 +78,42 @@ let personalMuvieDB = {
               }
               
               
-              personalMuvieDB.generes = ganr.split(", ");
+              personalMovieDB.generes = ganr.split(", ");
           
       
       }
       
-      personalMuvieDB.generes.forEach((item, i) => console.log(`Любимый жанр #${i + 1} - это ${item}`) );
+      personalMovieDB.generes.forEach((item, i) => console.log(`Любимый жанр #${i + 1} - это ${item}`) );
       
     },
 
+    showMyDB(){
+      if (!this.privat ) {
+          console. log(personalMovieDB); 
+      } else{
+        console.log(`База данных приватна`)
+      }
+
+    },
 
     toggleVisibleMyDB() {
       this.privat = (this.privat) ? false : true ;
+      console.log(`Свойство приват : ${this.privat}`)
     }
          
 };
 
+personalMovieDB.SetNumberOfFilms()
 
-
-// rememberMyFilms();
-
-
-
-// detectPersonalLevel();
+personalMovieDB.rememberMyFilms();
 
 
 
-// showMyDB(personalMuvieDB.privat);
+personalMovieDB.detectPersonalLevel();
+
+
+
+personalMovieDB.showMyDB();
 
 
 
@@ -828,3 +834,11 @@ let personalMuvieDB = {
 
 // console.log(protoHidden.__proto__); // 42
 // console.dir(protoHidden);
+
+// 'use strict';
+// function F() {}
+// console.dir( F );
+// let a = (1,5 - 1) * 2;
+
+// console.log(a);
+
